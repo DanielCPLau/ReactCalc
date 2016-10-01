@@ -42,7 +42,9 @@ function mapStateToProps(state) {
 		equalPressed: state.click.equalPressed,
 		currentEquation: state.click.currentEquation,
 		oldNum: state.click.oldNum,
-		currentOp: state.click.currentOp
+		currentOp: state.click.currentOp,
+		history: state.click.history,
+		opClicked: state.click.opClicked
 	};
 }
 

@@ -54,12 +54,11 @@ export default function(state = initialState, action) {
 
 
 	case 'BACK':
-
 		if (!state.opClicked) {
 			return {
 				...state,
 				currentNum: state.currentNum.substring(0, state.currentNum.length - 1),
-				currentEquation: state.currentEquation.substring(0, state.currentEquation - 1)
+				currentEquation: state.currentEquation.substring(0, state.currentEquation.length - 1)
 			}
 		}
 		return state;
@@ -100,11 +99,24 @@ export default function(state = initialState, action) {
 					break;
 			}
 
+			if (state.history.length > 14) {
+				return {
+				...initialState,
+				result: result,
+				equalPressed: true,
+				currentNum: result,
+				currentEquation: result,
+				history: [state.currentEquation]
+				}
+			}
+			
 			return {
 				...initialState,
 				result: result,
 				equalPressed: true,
-				currentNum: result
+				currentNum: result,
+				currentEquation: result,
+				history: [...state.history, state.currentEquation]
 			}
 
 		}

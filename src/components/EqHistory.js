@@ -3,34 +3,43 @@ import {connect} from 'react-redux';
 import SingleHistory from './SingleHistory';
 
 var histStyle = {
-	backgroundColor: '#b1c4bb',
+	backgroundColor: '#00727F',
 	width:'100vw',
 	marginLeft: 'calc(-50vw + 50%)',
 	height: '55px',
 	textAlign: 'right',
 	paddingRight: '16px',
-	paddingTop: '14px',
-	fontSize: '125%'
+	paddingTop: '8px',
+	fontSize: '125%',
+	marginBottom: '0',
+	paddingBottom: '0'
 }
 
+var btnStyle = {
+	paddingLeft: '5px'
+}
+
+var threeColors = 1;
+var keyVal = 0;
 class EqHistory extends Component {
 	render() {
-		if (false && this.props.historyExists && this.props.history.length > 0) {
-			return this.props.history.map((hist) => {
-				return (
-					<SingleHistory value={hist} />
-				);
-			});
+		if (this.props.history.length > 0) {
+			return (
+				<ul style={histStyle}>
+					{this.props.history.map((hist) => {
+						return <SingleHistory color={threeColors++ % 3} key={keyVal++} value={hist} />
+					})}
+				</ul>
+			)
 		}
 
-		return <div style={histStyle}>MAKE BLANK</div>
+		return <div style={histStyle}></div>
 	}
 }
 
 function mapStateToProps(state) {
 	return {
-		history: state.history,
-		historyExists: state.historyExists
+		history: state.click.history
 	};
 }
 
