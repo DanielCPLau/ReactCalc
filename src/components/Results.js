@@ -14,16 +14,20 @@ var resultStyle = {
 
 class Results extends Component {
 	render() {
-		console.log(this.props.currentNum)
-		if (this.props.equalPressed) {
-			return
+		console.log(this.props);
+		if (this.props.result != 0) {
+			return (
 				<div style={resultStyle}>
-					RESULT
-				</div>;
+					{this.props.result}
+				</div>
+			);
 		}
 
+		if (this.props.currentNum == '' && this.props.oldNum == '') {
+			return (<div style={resultStyle}>0</div>)
+		}
+		else
 		return (
-
 			<div style={resultStyle}>
 				{this.props.currentNum}
 			</div>
@@ -35,7 +39,10 @@ function mapStateToProps(state) {
 	return {
 		result: state.click.result,
 		currentNum: state.click.currentNum,
-		equalPressed: state.click.equalPressed
+		equalPressed: state.click.equalPressed,
+		currentEquation: state.click.currentEquation,
+		oldNum: state.click.oldNum,
+		currentOp: state.click.currentOp
 	};
 }
 

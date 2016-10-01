@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
+import { selectOp, calculate } from '../actions/index';
 
 import Add from 'react-icons/lib/ti/plus';
 import Sub from 'react-icons/lib/ti/minus';
@@ -19,19 +21,38 @@ var operationDiv = {
 }
 
 class Operations extends Component {
-	opPress(val) {
-		console.log(val);
+
+	selectOperation(op) {
+		if (this.props.currentOp != '' && !this.props.opClicked) {
+			this.props.calculate();
+		}
+		if (this.props.opClicked) {
+			return;
+		}
+		this.props.selectOp(op);
 	}
+
 	render() {
 		return (
 			<div style={centerDiv}>
-				<Add style={operationDiv} onClick={() => this.opPress('+')} size={60}/>
-				<Sub style={operationDiv} onClick={() => this.opPress('-')} size={60}/>
-				<Div style={operationDiv} onClick={() => this.opPress('/')} size={60}/>
-				<Mult style={operationDiv} onClick={() => this.opPress('x')} size={60}/>
+				<Add style={operationDiv} onClick={() => this.selectOperation('+')} size={60}/>
+				<Sub style={operationDiv} onClick={() => this.selectOperation('-')} size={60}/>
+				<Div style={operationDiv} onClick={() => this.selectOperation('÷')} size={60}/>
+				<Mult style={operationDiv} onClick={() => this.selectOperation('x')} size={60}/>
 			</div>
 		)
 	}
 }
 
-export default connect()(Operations);
+function mapStateToProps(state) {
+	return {
+		opClicked: state.click.opClicked,
+		currentOp: state.click.currentOp
+	};
+}
+
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ selectOp, calculate }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Operations);

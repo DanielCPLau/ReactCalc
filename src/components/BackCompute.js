@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux'
+import { calculate } from '../actions/index';
+import { clear } from '../actions/index';
+import { back } from '../actions/index';
 
 var centerStyle = {
 	textAlign:'center',
@@ -16,7 +20,15 @@ var operatorStyle = {
 
 class BackCompute extends Component {
 	opPress(val) {
-		console.log(val);
+		if (val == 'DEL') {
+			this.props.back();
+		}
+		if (val == '=') {
+			this.props.calculate();
+		}
+		if (val == 'C') {
+			this.props.clear();
+		}
 	}
 	render() {
 		return (
@@ -31,4 +43,8 @@ class BackCompute extends Component {
 	}
 }
 
-export default connect()(BackCompute);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ calculate, clear, back }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(BackCompute);
